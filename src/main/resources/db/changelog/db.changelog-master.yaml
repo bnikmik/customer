@@ -1,6 +1,6 @@
 databaseChangeLog:
   - include:
-     file: db/changelog/changeset/customer.sql
+      file: db/changelog/changeset/customer.sql
 
   - include:
-     file: db/changelog/changeset/user_roles.sql
+      file: db/changelog/changeset/customer_roles.sql

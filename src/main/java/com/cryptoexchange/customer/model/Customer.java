@@ -2,15 +2,14 @@ package com.cryptoexchange.customer.model;
 
 import com.cryptoexchange.customer.enums.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.net.URL;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +17,11 @@ public class Customer {
     private Long id;
     @ElementCollection(targetClass = Role.class)
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @CollectionTable(name = "customer_roles", joinColumns = @JoinColumn(name = "customer_id"))
     @Column(name = "role")
     private List<Role> rolesList;
     private boolean isVerified;
     private String phoneNumber;
     private String email;
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private byte[] avatar;
+    private URL avatarLink;
 }

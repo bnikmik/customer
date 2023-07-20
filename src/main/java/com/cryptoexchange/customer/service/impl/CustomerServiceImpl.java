@@ -23,11 +23,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Customer findCustomerById(Long id) {
         return repository.findById(id).orElseThrow(() -> new NotFoundException("Пользователь не найден!"));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Customer> findAllCustomers() {
         return repository.findAll();
     }
@@ -38,7 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
         tmp.setVerified(customer.isVerified());
         tmp.setEmail(customer.getEmail());
         tmp.setRolesList(customer.getRolesList());
-        tmp.setAvatar(customer.getAvatar());
+        tmp.setAvatarLink(customer.getAvatarLink());
         tmp.setPhoneNumber(customer.getPhoneNumber());
         return repository.save(tmp);
     }
