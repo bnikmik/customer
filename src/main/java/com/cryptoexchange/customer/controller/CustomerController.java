@@ -2,6 +2,7 @@ package com.cryptoexchange.customer.controller;
 
 import com.cryptoexchange.customer.model.Customer;
 import com.cryptoexchange.customer.service.CustomerService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/customers")
+@SecurityRequirement(name = "Bearer Authentication")
 public class CustomerController {
 
     private final CustomerService service;
