@@ -1,18 +1,18 @@
 package com.cryptoexchange.customer.service;
 
-import com.cryptoexchange.customer.model.Customer;
+import com.cryptoexchange.customer.dto.CustomerDTO;
 
 import java.util.List;
 
 public interface CustomerService {
 
-    Customer createCustomer(Customer customer);
+    CustomerDTO createCustomer(CustomerDTO customerDTO);
 
-    Customer findCustomerById(Long id);
+    CustomerDTO findCustomerById(Long id);
 
-    List<Customer> findAllCustomers();
+    List<CustomerDTO> findAllCustomers();
 
-    Customer updateCustomerById(Long id, Customer customer);
+    CustomerDTO updateCustomerById(Long id, CustomerDTO customer);
 
     void deleteCustomerById(Long id);
 }

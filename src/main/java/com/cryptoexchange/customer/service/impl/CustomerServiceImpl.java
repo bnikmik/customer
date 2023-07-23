@@ -1,5 +1,6 @@
 package com.cryptoexchange.customer.service.impl;
 
+import com.cryptoexchange.customer.dto.CustomerDTO;
 import com.cryptoexchange.customer.model.Customer;
 import com.cryptoexchange.customer.repository.CustomerRepository;
 import com.cryptoexchange.customer.service.CustomerService;
@@ -8,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.cryptoexchange.customer.mapper.CustomerMapper.INSTANCE;
 
 @Service
 @Transactional
@@ -17,36 +21,39 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository repository;
 
     @Override
-    public Customer createCustomer(Customer customer) {
-        return repository.save(customer);
+    public CustomerDTO createCustomer(CustomerDTO customerDTO) {
+        repository.save(INSTANCE.toEntity(customerDTO));
+        return customerDTO;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Customer findCustomerById(Long id) {
-        return repository.findById(id).orElseThrow();
+    public CustomerDTO findCustomerById(Long id) {
+        Customer customer = repository.findById(id).orElseThrow();
+        return INSTANCE.toDTO(customer);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<Customer> findAllCustomers() {
-        return repository.findAll();
+    public List<CustomerDTO> findAllCustomers() {
+        return repository.findAll().stream().map(INSTANCE::toDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Customer updateCustomerById(Long id, Customer customer) {
+    public CustomerDTO updateCustomerById(Long id, CustomerDTO customerDTO) {
         Customer tmp = repository.findById(id).orElseThrow();
-        tmp.setVerified(customer.isVerified());
-        tmp.setEmail(customer.getEmail());
-        tmp.setRolesList(customer.getRolesList());
-        tmp.setAvatarLink(customer.getAvatarLink());
-        tmp.setPhoneNumber(customer.getPhoneNumber());
-        return repository.save(tmp);
+        tmp.setVerified(customerDTO.isVerified());
+        tmp.setEmail(customerDTO.getEmail());
+        tmp.setRolesList(customerDTO.getRolesList());
+        tmp.setAvatarLink(customerDTO.getAvatarLink());
+        tmp.setPhoneNumber(customerDTO.getPhoneNumber());
+        repository.save(tmp);
+        return INSTANCE.toDTO(tmp);
     }
 
     @Override
     public void deleteCustomerById(Long id) {
-        Customer customer = findCustomerById(id);
+        Customer customer = repository.findById(id).orElseThrow();
         repository.delete(customer);
     }
 }

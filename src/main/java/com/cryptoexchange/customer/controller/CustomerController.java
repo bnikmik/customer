@@ -1,6 +1,6 @@
 package com.cryptoexchange.customer.controller;
 
-import com.cryptoexchange.customer.model.Customer;
+import com.cryptoexchange.customer.dto.CustomerDTO;
 import com.cryptoexchange.customer.service.CustomerService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +16,8 @@ public class CustomerController {
     private final CustomerService service;
 
     @PostMapping()
-    public ResponseEntity<?> createCustomer(@RequestBody Customer customer) {
-        return ResponseEntity.ok(service.createCustomer(customer));
+    public ResponseEntity<?> createCustomer(@RequestBody CustomerDTO customerDTO) {
+        return ResponseEntity.ok(service.createCustomer(customerDTO));
     }
 
     @GetMapping("/{id}")
@@ -31,8 +31,8 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCustomerById(@PathVariable Long id, @RequestBody Customer customer) {
-        return ResponseEntity.ok(service.updateCustomerById(id, customer));
+    public ResponseEntity<?> updateCustomerById(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
+        return ResponseEntity.ok(service.updateCustomerById(id, customerDTO));
     }
 
     @DeleteMapping("/{id}")
