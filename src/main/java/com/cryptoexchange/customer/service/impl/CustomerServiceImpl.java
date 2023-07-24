@@ -1,6 +1,7 @@
 package com.cryptoexchange.customer.service.impl;
 
 import com.cryptoexchange.customer.dto.CustomerDTO;
+import com.cryptoexchange.customer.exception.NotFoundException;
 import com.cryptoexchange.customer.model.Customer;
 import com.cryptoexchange.customer.repository.CustomerRepository;
 import com.cryptoexchange.customer.service.CustomerService;
@@ -29,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional(readOnly = true)
     public CustomerDTO findCustomerById(Long id) {
-        Customer customer = repository.findById(id).orElseThrow();
+        Customer customer = repository.findById(id).orElseThrow(NotFoundException::new);
         return INSTANCE.toDTO(customer);
     }
 
@@ -41,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO updateCustomerById(Long id, CustomerDTO customerDTO) {
-        Customer tmp = repository.findById(id).orElseThrow();
+        Customer tmp = repository.findById(id).orElseThrow(NotFoundException::new);
         tmp.setVerified(customerDTO.isVerified());
         tmp.setEmail(customerDTO.getEmail());
         tmp.setRolesList(customerDTO.getRolesList());
@@ -53,7 +54,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteCustomerById(Long id) {
-        Customer customer = repository.findById(id).orElseThrow();
+        Customer customer = repository.findById(id).orElseThrow(NotFoundException::new);
         repository.delete(customer);
     }
 }

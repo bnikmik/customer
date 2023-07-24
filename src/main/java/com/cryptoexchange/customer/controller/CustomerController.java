@@ -39,7 +39,8 @@ public class CustomerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = CustomerDTO.class))}),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)})
+            @ApiResponse(responseCode = "401", description = "Не авторизован. Используйте обновленный bearer токен.", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Пользователь не найден.", content = @Content)})
     public ResponseEntity<?> findCustomerById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findCustomerById(id));
     }
@@ -50,7 +51,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "200", description = "OK", content = {@Content(mediaType = "application/json",
                     array = @ArraySchema(schema = @Schema(implementation = CustomerDTO.class)))}),
 
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)})
+            @ApiResponse(responseCode = "401", description = "Не авторизован. Используйте обновленный bearer токен.", content = @Content)})
     public ResponseEntity<?> findAllCustomers() {
         return ResponseEntity.ok(service.findAllCustomers());
     }
@@ -60,8 +61,9 @@ public class CustomerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = CustomerDTO.class))}),
-            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)})
+            @ApiResponse(responseCode = "400", description = "Введены неверные параметры.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Не авторизован. Используйте обновленный bearer токен.", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Пользователь не найден.", content = @Content)})
     public ResponseEntity<?> updateCustomerById(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
         return ResponseEntity.ok(service.updateCustomerById(id, customerDTO));
     }
@@ -71,7 +73,8 @@ public class CustomerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = CustomerDTO.class))}),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)})
+            @ApiResponse(responseCode = "401", description = "Не авторизован. Используйте обновленный bearer токен.", content = @Content),
+            @ApiResponse(responseCode = "404", description = "Пользователь не найден.", content = @Content)})
     public ResponseEntity<?> deleteCustomerById(@PathVariable Long id) {
         service.deleteCustomerById(id);
         return ResponseEntity.ok().build();
