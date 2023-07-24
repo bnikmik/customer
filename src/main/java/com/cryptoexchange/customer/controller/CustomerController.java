@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/customers")
@@ -28,9 +30,9 @@ public class CustomerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "OK", content = {@Content(mediaType = "application/json",
                     schema = @Schema(implementation = CustomerDTO.class))}),
-            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)})
-    public ResponseEntity<?> createCustomer(@RequestBody CustomerDTO customerDTO) {
+            @ApiResponse(responseCode = "400", description = "Введены неверные параметры.", content = @Content),
+            @ApiResponse(responseCode = "401", description = "Не авторизован. Используйте обновленный bearer токен.", content = @Content)})
+    public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDTO customerDTO) {
         return ResponseEntity.ok(service.createCustomer(customerDTO));
     }
 
@@ -64,7 +66,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Введены неверные параметры.", content = @Content),
             @ApiResponse(responseCode = "401", description = "Не авторизован. Используйте обновленный bearer токен.", content = @Content),
             @ApiResponse(responseCode = "404", description = "Пользователь не найден.", content = @Content)})
-    public ResponseEntity<?> updateCustomerById(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
+    public ResponseEntity<?> updateCustomerById(@PathVariable Long id, @Valid @RequestBody CustomerDTO customerDTO) {
         return ResponseEntity.ok(service.updateCustomerById(id, customerDTO));
     }
 
