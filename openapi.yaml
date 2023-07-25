@@ -3,47 +3,47 @@ info:
   title: OpenAPI definition
   version: v0
 servers:
-  - url: http://localhost:8081
-    description: Generated server url
+- url: http://localhost:8081
+  description: Generated server url
 paths:
   /customers/{id}:
     get:
       tags:
-        - Пользователи
+      - Пользователи
       summary: Получить пользователя по id
       operationId: findCustomerById
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
         "401":
           description: Не авторизован. Используйте обновленный bearer токен.
+        "404":
+          description: Пользователь не найден.
         "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerDTO'
-        "404":
-          description: Пользователь не найден.
       security:
-        - Bearer Authentication: []
+      - Bearer Authentication: []
     put:
       tags:
-        - Пользователи
+      - Пользователи
       summary: Обновить пользователя по id
       operationId: updateCustomerById
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       requestBody:
         content:
           application/json:
@@ -51,49 +51,49 @@ paths:
               $ref: '#/components/schemas/CustomerDTO'
         required: true
       responses:
+        "400":
+          description: Введены неверные параметры.
         "401":
           description: Не авторизован. Используйте обновленный bearer токен.
+        "404":
+          description: Пользователь не найден.
         "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerDTO'
-        "400":
-          description: Введены неверные параметры.
-        "404":
-          description: Пользователь не найден.
       security:
-        - Bearer Authentication: []
+      - Bearer Authentication: []
     delete:
       tags:
-        - Пользователи
+      - Пользователи
       summary: Удалить пользователя по id
       operationId: deleteCustomerById
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-            format: int64
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
       responses:
         "401":
           description: Не авторизован. Используйте обновленный bearer токен.
+        "404":
+          description: Пользователь не найден.
         "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerDTO'
-        "404":
-          description: Пользователь не найден.
       security:
-        - Bearer Authentication: []
+      - Bearer Authentication: []
   /customers:
     get:
       tags:
-        - Пользователи
+      - Пользователи
       summary: Получить всех пользоваталей
       operationId: findAllCustomers
       responses:
@@ -108,10 +108,10 @@ paths:
                 items:
                   $ref: '#/components/schemas/CustomerDTO'
       security:
-        - Bearer Authentication: []
+      - Bearer Authentication: []
     post:
       tags:
-        - Пользователи
+      - Пользователи
       summary: Создать нового пользователя
       operationId: createCustomer
       requestBody:
@@ -121,6 +121,8 @@ paths:
               $ref: '#/components/schemas/CustomerDTO'
         required: true
       responses:
+        "400":
+          description: Введены неверные параметры.
         "401":
           description: Не авторизован. Используйте обновленный bearer токен.
         "200":
@@ -129,17 +131,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerDTO'
-        "400":
-          description: Введены неверные параметры.
       security:
-        - Bearer Authentication: []
+      - Bearer Authentication: []
 components:
   schemas:
     CustomerDTO:
       required:
-        - avatarLink
-        - phoneNumber
-        - rolesList
+      - avatarLink
+      - phoneNumber
+      - rolesList
       type: object
       properties:
         id:
@@ -151,12 +151,12 @@ components:
           items:
             type: string
             enum:
-              - TECHNICAL
-              - PHYSICAL
-              - USER
-              - MODERATOR
-              - ADMIN
-              - MARKET
+            - TECHNICAL
+            - PHYSICAL
+            - USER
+            - MODERATOR
+            - ADMIN
+            - MARKET
         phoneNumber:
           type: string
         email:

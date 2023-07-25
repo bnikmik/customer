@@ -146,9 +146,9 @@
 					</execution>
 				</executions>
 				<configuration>
-					<apiDocsUrl>http://localhost:8081/v3/api-docs</apiDocsUrl>
+					<apiDocsUrl>http://localhost:8081/v3/api-docs.yaml</apiDocsUrl>
 					<outputDir>${project.build.directory}/my_open_api_specification/</outputDir>
-					<outputFileName>my_open_api_specification.yaml</outputFileName>
+					<outputFileName>openapi.yaml</outputFileName>
 					<skip>false</skip>
 				</configuration>
 			</plugin>
