@@ -17,6 +17,10 @@ import java.util.List;
 public class CustomerDTO {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
+    @NotBlank
+    private String login;
+    @NotBlank
+    private String fullName;
     @NotEmpty
     private List<Role> rolesList;
     private boolean isVerified;

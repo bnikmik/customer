@@ -13,6 +13,8 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String login;
+    private String fullName;
     @ElementCollection(targetClass = Role.class)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "customer_roles", joinColumns = @JoinColumn(name = "customer_id"))
